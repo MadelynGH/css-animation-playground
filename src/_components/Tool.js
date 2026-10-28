@@ -4,7 +4,7 @@ import Form from "next/form";
 import styles from "./Tool.module.css";
 
 function PreviewBox({ baseItemStyle, animationProperties }) {
-   const itemStyle = Object.assign(baseItemStyle, animationProperties);
+    const itemStyle = {...baseItemStyle, ...animationProperties};
 
     return (
         <div style={{
@@ -22,23 +22,61 @@ function PreviewBox({ baseItemStyle, animationProperties }) {
 }
 
 export default function Tool() {
-    const [animationName, updateAnimationName] = useState(styles.pulse);
-    const animationProperties = {
-        animationName: animationName,
+    const [animationProperties, updateAnimationProperties] = useState({
         animationIterationCount: "infinite",
+        
+        animationName: styles.pulse,
         animationDuration: "1s",
-    };
+        animationTimingFunction: "linear"
+    });
+
+    function PropertySelect({ propertyName, displayTitle, children }) {
+        return (
+            <div style={{
+                marginBottom: "15px"
+            }}>
+                <label htmlFor={propertyName}>{displayTitle}: </label>
+                <select id={propertyName} value={animationProperties[propertyName]} onChange={e => {
+                    let tempAnimationProperties = {...animationProperties};
+                    tempAnimationProperties[propertyName] = e.target.value;
+                    updateAnimationProperties(tempAnimationProperties);
+                }}>
+                    {children}
+                </select>
+            </div>
+        );
+    }
 
     return (
         <div>
             <Form>
-                <label htmlFor="animationName">Animation Choice: </label>
-                <select id="animationName" value={animationName} onChange={e => {
-                    updateAnimationName(e.target.value);
-                }}>
+                <PropertySelect propertyName="animationName" displayTitle="Animation Choice">
                     <option value={styles.pulse}>Pulse</option>
                     <option value={styles.spin}>Spin</option>
-                </select>
+                </PropertySelect>
+
+                <PropertySelect propertyName="animationDuration" displayTitle="Animation Duration">
+                    <option>0.2s</option>
+                    <option>0.5s</option>
+                    <option>1s</option>
+                    <option>2s</option>
+                </PropertySelect>
+
+                <PropertySelect propertyName="animationTimingFunction" displayTitle="Animation Timing Function">
+                    <option value="linear">Linear</option>
+                    <option value="ease">Ease</option>
+                    <option value="ease-in">Ease In</option>
+                    <option value="ease-out">Ease Out</option>
+                    <option value="step-start">Step Start</option>
+                    <option value="step-end">Step End</option>
+                </PropertySelect>
+
+                <PropertySelect propertyName="animationDirection" displayTitle="Animation Direction">
+                    <option value="normal">Normal</option>
+                    <option value="reverse">Reverse</option>
+                    <option value="alternate">Alternate</option>
+                    <option value="alternate-reverse">Alternate Reverse</option>
+                </PropertySelect>
             </Form>
             
             <PreviewBox baseItemStyle={{
