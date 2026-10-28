@@ -5,8 +5,8 @@ const montserrat = Montserrat({
 });
 
 export const metadata = {
-  title: "CSS Animation Previewer",
-  description: "A tool that helps you preview CSS animations."
+  title: "CSS Animation Playground",
+  description: "A playground ... for CSS animations!"
 };
 
 export default function RootLayout({ children }) {
