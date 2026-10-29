@@ -2,8 +2,13 @@
 import { useState } from "react";
 import Form from "next/form";
 import styles from "./Tool.module.css";
+import { Roboto_Mono } from "next/font/google";
 
-function PreviewBox({ baseItemStyle, animationProperties }) {
+const robotoMono = Roboto_Mono({
+    weight: ["400"]
+});
+
+function PreviewBox({ baseItemStyle, animationProperties, children }) {
     const itemStyle = {...baseItemStyle, ...animationProperties};
 
     return (
@@ -14,11 +19,9 @@ function PreviewBox({ baseItemStyle, animationProperties }) {
             height: "200px",
             width: "200px",
             padding: "30px",
-            boxSizing: "content-box",
-            marginLeft: "auto",
-            marginRight: "auto"
+            boxSizing: "content-box"
         }}>
-            <div style={ itemStyle }></div>
+            <div style={ itemStyle }>{children}</div>
         </div>
     );
 }
@@ -84,17 +87,45 @@ export default function Tool() {
                 </PropertySelect>
             </Form>
             
-            <PreviewBox baseItemStyle={{
+            <div style={{
+                display: "flex",
+                justifyContent: "center",
+                flexFlow: "row wrap"
+            }}>
+                <PreviewBox baseItemStyle={{
+                        width: "100px",
+                        height: "100px",
+                        backgroundColor: "#4f379e",
+                        boxShadow: "0px 0px 20px 10px #4f379e73",
+                        borderRadius: "20px",
+                        marginLeft: "auto",
+                        marginRight: "auto",
+                        marginTop: "50px"
+                    }} animationProperties={animationProperties} />
+                <PreviewBox baseItemStyle={{
+                        width: "100px",
+                        height: "100px",
+                        backgroundColor: "#4f379e",
+                        boxShadow: "0px 0px 20px 10px #4f379e73",
+                        borderRadius: "50px",
+                        marginLeft: "auto",
+                        marginRight: "auto",
+                        marginTop: "50px"
+                    }} animationProperties={animationProperties} />
+                <PreviewBox baseItemStyle={{
                     width: "100px",
                     height: "100px",
-                    backgroundColor: "#4f379e",
-                    boxShadow: "0px 0px 20px 10px #4f379e73",
-                    borderRadius: "20px",
-                    boxSizing: "content-box",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "6em",
+                    color: "#4f379e",
+                    textShadow: "0px 0px 20px 10px #4f379e73",
                     marginLeft: "auto",
                     marginRight: "auto",
                     marginTop: "50px"
-                }} animationProperties={animationProperties} />
+                }} animationProperties={animationProperties}><span className={robotoMono.className}>E</span></PreviewBox>
+                </div>
         </div>
     );
 }
