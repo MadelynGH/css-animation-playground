@@ -11,7 +11,7 @@ export default function Page() {
         }}>
             <h1 style={{
                 marginBottom: "5vh"
-            }}>CSS Animation Playground</h1>
+            }} id="title">CSS Animation Playground</h1>
             <Tool />
         </div>
     );

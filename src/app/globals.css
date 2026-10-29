@@ -1,3 +1,19 @@
+body {
+    background-color: rgb(255, 253, 248);
+}
+
+#title {
+    font-size: 3em;
+    background-image: linear-gradient(to right, navy, #823562);
+    background-clip: text;
+    color: transparent;
+    transition-duration: 0.3s;
+}
+
+#title:hover {
+    background-image: linear-gradient(to right, #823562, navy);
+}
+
 select, ::picker(select) {
     appearance: base-select;
 }
