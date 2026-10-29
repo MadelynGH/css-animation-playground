@@ -10,11 +10,11 @@ function PreviewBox({ baseItemStyle, animationProperties }) {
         <div style={{
             margin: "30px",
             border: "1px solid navy",
-            padding: "40px",
             borderRadius: "20px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center"
+            height: "200px",
+            width: "200px",
+            padding: "30px",
+            boxSizing: "content-box"
         }}>
             <div style={ itemStyle }></div>
         </div>
@@ -53,6 +53,9 @@ export default function Tool() {
                 <PropertySelect propertyName="animationName" displayTitle="Animation Choice">
                     <option value={styles.pulse}>Pulse</option>
                     <option value={styles.spin}>Spin</option>
+                    <option value={styles.fade}>Fade</option>
+                    <option value={styles.slide}>Slide</option>
+                    <option value={styles.bounce}>Bounce</option>
                 </PropertySelect>
 
                 <PropertySelect propertyName="animationDuration" displayTitle="Animation Duration">
@@ -85,7 +88,10 @@ export default function Tool() {
                     backgroundColor: "#4f379e",
                     boxShadow: "0px 0px 20px 10px #4f379e73",
                     borderRadius: "20px",
-                    boxSizing: "content-box"
+                    boxSizing: "content-box",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    marginTop: "50px"
                 }} animationProperties={animationProperties} />
         </div>
     );
