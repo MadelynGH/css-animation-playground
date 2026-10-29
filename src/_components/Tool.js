@@ -14,7 +14,9 @@ function PreviewBox({ baseItemStyle, animationProperties }) {
             height: "200px",
             width: "200px",
             padding: "30px",
-            boxSizing: "content-box"
+            boxSizing: "content-box",
+            marginLeft: "auto",
+            marginRight: "auto"
         }}>
             <div style={ itemStyle }></div>
         </div>
