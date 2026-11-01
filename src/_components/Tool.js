@@ -1,12 +1,41 @@
 "use client"
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Form from "next/form";
-import styles from "./Tool.module.css";
-import { Roboto_Mono } from "next/font/google";
+import  "./Tool.css";
+import { Roboto_Mono, Montserrat } from "next/font/google";
 
 const robotoMono = Roboto_Mono({
     weight: ["400"]
 });
+
+const montserrat = Montserrat({
+    weight: ["400", "500", "600", "700"]
+});
+
+const animations = {
+pulse: 
+`@keyframes pulse {
+    0% {transform: scale(1);}
+    50% {transform: scale(1.2);}
+    100% {transform: scale(1);}
+}`,
+
+spin: 
+`@keyframes spin {
+    from {transform: rotate(0);}
+    to {transform: rotate(360deg)}
+}`,
+
+fade: 
+`@keyframes fade {
+    0% {opacity: 100;}
+    50% {opacity: 0;}
+    100% {opacity: 100;}
+}`,
+
+slide: `Code not available for the Slide animation. Sorry!`,
+
+bounce: `Code not available for the Bounce animation. Sorry!`};
 
 function PreviewBox({ baseItemStyle, animationProperties, children }) {
     const itemStyle = {...baseItemStyle, ...animationProperties};
@@ -26,21 +55,50 @@ function PreviewBox({ baseItemStyle, animationProperties, children }) {
     );
 }
 
+function formatAnimationProperties(animationProperties) {
+    if (animationProperties["animationName"] != "slide" && animationProperties["animationName"] != "bounce") {
+        return `
+.${animationProperties.animationName}-animation {
+    animation-iteration-count: infinite;
+    animation-name: ${animationProperties["animationName"]};
+    animation-duration: ${animationProperties["animationDuration"]};
+    animation-timing-function: ${animationProperties["animationTimingFunction"]};
+    animation-direction: ${animationProperties["animationDirection"]};
+}`;
+    } else {
+        return "";
+    }
+}
+
 export default function Tool() {
     const [animationProperties, updateAnimationProperties] = useState({
         animationIterationCount: "infinite",
         
-        animationName: styles.pulse,
+        animationName: "pulse",
         animationDuration: "1s",
-        animationTimingFunction: "linear"
+        animationTimingFunction: "linear",
+        animationDirection: "normal"
     });
+    const [currentCode, updateCurrentCode] = useState(
+`${animations[animationProperties.animationName]}
+
+${formatAnimationProperties(animationProperties)}`);
+    const [copiedIndicatorList, updateCopiedIndicatorList] = useState([]);
+
+    useEffect(() => {updateCurrentCode(
+`${animations[animationProperties.animationName]}
+
+${formatAnimationProperties(animationProperties)}`)}, [animationProperties]);
 
     function PropertySelect({ propertyName, displayTitle, children }) {
         return (
             <div style={{
                 marginBottom: "15px"
             }}>
-                <label htmlFor={propertyName}>{displayTitle}: </label>
+                <label htmlFor={propertyName} style={{
+                    fontWeight: "500",
+                    color: "navy"
+                }}>{displayTitle}: </label>
                 <select id={propertyName} value={animationProperties[propertyName]} onChange={e => {
                     let tempAnimationProperties = {...animationProperties};
                     tempAnimationProperties[propertyName] = e.target.value;
@@ -56,11 +114,11 @@ export default function Tool() {
         <div>
             <Form>
                 <PropertySelect propertyName="animationName" displayTitle="Animation Choice">
-                    <option value={styles.pulse}>Pulse</option>
-                    <option value={styles.spin}>Spin</option>
-                    <option value={styles.fade}>Fade</option>
-                    <option value={styles.slide}>Slide</option>
-                    <option value={styles.bounce}>Bounce</option>
+                    <option value={"pulse"}>Pulse</option>
+                    <option value={"spin"}>Spin</option>
+                    <option value={"fade"}>Fade</option>
+                    <option value={"slide"}>Slide</option>
+                    <option value={"bounce"}>Bounce</option>
                 </PropertySelect>
 
                 <PropertySelect propertyName="animationDuration" displayTitle="Animation Duration">
@@ -125,7 +183,61 @@ export default function Tool() {
                     marginRight: "auto",
                     marginTop: "50px"
                 }} animationProperties={animationProperties}><span className={robotoMono.className}>E</span></PreviewBox>
+            </div>
+
+            <div style={{
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    width: "60vw",
+                    textAlign: "left",
+                    width: "fit-content",
+                    backgroundColor: "#00042d",
+                    color: "white",
+                    padding: "0",
+                    borderRadius: "20px",
+                    boxShadow: "0px 0px 15px 5px #261a4c73"
+                }}>
+                <pre style={{
+                    padding: "20px"
+                }}>
+                    <code>{currentCode}</code>
+                </pre>
+                <div style={{
+                    width: "100%",
+                    display: "flex",
+                    flexFlow: "row nowrap",
+                    justifyContent: "space-between",
+                    alignItems: "end"
+                }}>
+                    <p style={{
+                        margin: "12px",
+                        marginBottom: "8px",
+                        height: "1.5em"
+                    }}>{copiedIndicatorList[copiedIndicatorList.length-1]}</p>
+                    <button style={{
+                        backgroundColor: "#00042d",
+                        color: "white",
+                        border: "1.5px solid white",
+                        borderRightColor: "transparent",
+                        borderBottomColor: "transparent",
+                        borderRadius: "8px 0 20px 0",
+                        padding: "8px",
+                        fontSize: "1em"
+                    }} onClick={() => {
+                        navigator.clipboard.writeText(currentCode);
+                        let tempCopiedIndicatorList = copiedIndicatorList.slice();
+                        tempCopiedIndicatorList.push(<span style={{
+                            animationIterationCount: "1",
+                            animationName: "copied-fadeInOut",
+                            animationDuration: "2s",
+                            animationTimingFunction: "ease-in",
+                            opacity: "0",
+                            fontSize: "1em"
+                    }} key={copiedIndicatorList.length}>Copied!</span>)
+                    updateCopiedIndicatorList(tempCopiedIndicatorList);
+                    }} className={`${montserrat.className} copyButton`}>❏ Copy</button>
                 </div>
+            </div>
         </div>
     );
 }

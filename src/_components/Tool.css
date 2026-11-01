@@ -26,3 +26,14 @@
     50% {margin-top: 100px;}
     100% {margin-top: 0;}
 }
+
+
+@keyframes copied-fadeInOut {
+    0% {opacity: 100;}
+    75% {opacity: 100;}
+    100% {opacity: 0;}
+}
+
+.copyButton:hover {
+    font-weight: 500;
+}

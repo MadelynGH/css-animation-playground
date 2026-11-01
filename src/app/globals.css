@@ -2,6 +2,10 @@ body {
     background-color: rgb(255, 253, 248);
 }
 
+button:hover {
+    cursor: pointer;
+}
+
 #title {
     font-size: 3em;
     background-image: linear-gradient(to right, navy, #823562);
