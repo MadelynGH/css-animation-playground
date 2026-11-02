@@ -9,7 +9,7 @@ const robotoMono = Roboto_Mono({
 });
 
 const montserrat = Montserrat({
-    weight: ["400", "500", "600", "700"]
+    weight: ["300", "400", "500", "600", "700", "800"]
 });
 
 const animations = {
@@ -44,11 +44,13 @@ function PreviewBox({ baseItemStyle, animationProperties, children }) {
         <div style={{
             margin: "30px",
             border: "1px solid navy",
-            borderRadius: "20px",
+            borderRadius: "35px",
             height: "200px",
             width: "200px",
             padding: "30px",
-            boxSizing: "content-box"
+            boxSizing: "content-box",
+            backgroundColor: "white",
+            boxShadow: "0px 0px 20px 10px #ffffff73"
         }}>
             <div style={ itemStyle }>{children}</div>
         </div>
@@ -93,7 +95,7 @@ ${formatAnimationProperties(animationProperties)}`)}, [animationProperties]);
     function PropertySelect({ propertyName, displayTitle, children }) {
         return (
             <div style={{
-                marginBottom: "15px"
+                marginBottom: "20px"
             }}>
                 <label htmlFor={propertyName} style={{
                     fontWeight: "500",
@@ -112,7 +114,10 @@ ${formatAnimationProperties(animationProperties)}`)}, [animationProperties]);
 
     return (
         <div>
-            <Form>
+            <Form style={{
+                marginTop: "12px",
+                marginBottom: "40px"
+            }}>
                 <PropertySelect propertyName="animationName" displayTitle="Animation Choice">
                     <option value={"pulse"}>Pulse</option>
                     <option value={"spin"}>Spin</option>
@@ -122,10 +127,10 @@ ${formatAnimationProperties(animationProperties)}`)}, [animationProperties]);
                 </PropertySelect>
 
                 <PropertySelect propertyName="animationDuration" displayTitle="Animation Duration">
-                    <option>0.2s</option>
-                    <option>0.5s</option>
                     <option>1s</option>
                     <option>2s</option>
+                    <option>3s</option>
+                    <option>4s</option>
                 </PropertySelect>
 
                 <PropertySelect propertyName="animationTimingFunction" displayTitle="Animation Timing Function">
@@ -144,11 +149,15 @@ ${formatAnimationProperties(animationProperties)}`)}, [animationProperties]);
                     <option value="alternate-reverse">Alternate Reverse</option>
                 </PropertySelect>
             </Form>
+
+            <hr />
             
             <div style={{
                 display: "flex",
                 justifyContent: "center",
-                flexFlow: "row wrap"
+                flexFlow: "row wrap",
+                marginBottom: "20px",
+                marginTop: "20px"
             }}>
                 <PreviewBox baseItemStyle={{
                         width: "100px",
@@ -178,16 +187,19 @@ ${formatAnimationProperties(animationProperties)}`)}, [animationProperties]);
                     justifyContent: "center",
                     fontSize: "6em",
                     color: "#4f379e",
-                    textShadow: "0px 0px 20px 10px #4f379e73",
                     marginLeft: "auto",
                     marginRight: "auto",
-                    marginTop: "50px"
+                    marginTop: "50px",
+                    textShadow: "0px 0px 15px #4f379e73"
                 }} animationProperties={animationProperties}><span className={robotoMono.className}>E</span></PreviewBox>
             </div>
+
+            <hr />
 
             <div style={{
                     marginLeft: "auto",
                     marginRight: "auto",
+                    marginTop: "40px",
                     width: "60vw",
                     textAlign: "left",
                     width: "fit-content",
@@ -195,7 +207,7 @@ ${formatAnimationProperties(animationProperties)}`)}, [animationProperties]);
                     color: "white",
                     padding: "0",
                     borderRadius: "20px",
-                    boxShadow: "0px 0px 15px 5px #261a4c73"
+                    boxShadow: "0px 0px 15px 5px #261a4c5f"
                 }}>
                 <pre style={{
                     padding: "20px"
