@@ -1,4 +1,4 @@
-# Instructions
+# Instructions / How to Use
 ## About
 **CSS Animation Playground** is a tool that allows you to play with CSS animations. I created five different animations: Pulse, Spin, Fade, Slide, and Bounce. Certain CSS properties related to animations are customizable via dropdowns. (Note that the dropdowns may not include all possible property values.)
 ## Dropdowns
